@@ -1,0 +1,24 @@
+{
+  "name": "adventofcode2023",
+  "version": "1.0.0",
+  "description": "Documenting my journey for the http://adventofcode.com 2023 edition.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apbetioli/AdventOfCode2023.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apbetioli/AdventOfCode2023/issues"
+  },
+  "homepage": "https://github.com/apbetioli/AdventOfCode2023#readme",
+  "dependencies": {
+    "vitest": "^0.34.6"
+  }
+}
