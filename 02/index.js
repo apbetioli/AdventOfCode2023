@@ -1,5 +1,5 @@
 import fs from "fs";
-import run from "./code.js";
+import { default as run, minimumSetPower } from "./code.js";
 
 export function readFile(file) {
   return fs.readFileSync(file).toString();
@@ -7,4 +7,5 @@ export function readFile(file) {
 
 const input = readFile("./input.txt");
 
-console.log(run(input));
+console.log('possible games', run(input));
+console.log('minimum set power', minimumSetPower(input))

@@ -1,12 +1,16 @@
 export default function run(input) {
-  const games = input
-    .split("\n")
-    .filter((line) => line.startsWith("Game"))
-    .map((line) => parseGame(line));
+  const games = parseGames(input);
 
   return games
     .map((game) => (isPossible(game) ? game.id : 0))
     .reduce((sum, curr) => sum + curr);
+}
+
+function parseGames(input) {
+  return input
+    .split("\n")
+    .filter((line) => line.startsWith("Game"))
+    .map((line) => parseGame(line));
 }
 
 export function parseGame(line) {
@@ -30,4 +34,13 @@ export function parseGame(line) {
 
 export function isPossible(game) {
   return game.red <= 12 && game.green <= 13 && game.blue <= 14;
+}
+
+export function power(game) {
+  return game.red * game.green * game.blue;
+}
+
+export function minimumSetPower(input) {
+  const games = parseGames(input);
+  return games.map((game) => power(game)).reduce((sum, curr) => sum + curr);
 }
