@@ -1,4 +1,4 @@
-export function calibrate(input) {
+export default function run(input) {
   return input
     .split("\n")
     .map((line) => {
@@ -14,9 +14,7 @@ export function calibrate(input) {
       return matches;
     })
     .map((numbers) =>
-      numbers.length
-        ? numbers[0] * 10 + numbers[numbers.length - 1]
-        : 0
+      numbers.length ? numbers[0] * 10 + numbers[numbers.length - 1] : 0
     )
     .reduce((prev, curr) => prev + curr);
 }
@@ -34,6 +32,6 @@ const numberMap = {
   nine: 9,
 };
 
-export function parse(number) {
+function parse(number) {
   return numberMap[number] ?? parseInt(number);
 }
