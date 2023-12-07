@@ -1,6 +1,6 @@
-export function run(input) {
+export default function run(input) {
   const schematic = parseSchematic(input);
-  const numbers = [];
+  const numbers = {};
 
   for (let row = 0; row < schematic.length; row++) {
     let current = "";
@@ -9,26 +9,37 @@ export function run(input) {
     for (let col = 0; col < schematic[row].length; col++) {
       if (schematic[row][col].match(/[0-9]/)) {
         current += schematic[row][col];
-        if (!hasSymbol && hasAdjacentSymbol(schematic, [row, col])) {
-          hasSymbol = true;
+        let adj = hasAdjacentSymbol(schematic, [row, col]);
+        if (adj) {
+          hasSymbol = adj;
         }
         continue;
       }
       if (hasSymbol) {
-        numbers.push(parseInt(current));
+        numbers[hasSymbol] ||= [];
+        numbers[hasSymbol].push(parseInt(current));
       }
       current = "";
       hasSymbol = false;
     }
 
     if (hasSymbol) {
-      numbers.push(parseInt(current));
+      numbers[hasSymbol] ||= [];
+      numbers[hasSymbol].push(parseInt(current));
     }
     current = "";
     hasSymbol = false;
   }
 
-  return numbers.reduce((prev, curr) => prev + curr);
+  let ratio = 0;
+  let sum = 0;
+  Object.entries(numbers).forEach(([k, v]) => {
+    if (k.startsWith("*") && v.length > 1) {
+      ratio += v.reduce((prev, curr) => prev * curr);
+    }
+    sum += v.reduce((prev, curr) => prev + curr);
+  });
+  return [sum, ratio];
 }
 
 export function parseSchematic(input) {
@@ -58,46 +69,4 @@ export function hasAdjacentSymbol(schematic, position) {
     }
   }
   return false;
-}
-
-export function ratio(input) {
-  const schematic = parseSchematic(input);
-  const numbers = {};
-
-  for (let row = 0; row < schematic.length; row++) {
-    let current = "";
-    let hasSymbol = false;
-
-    for (let col = 0; col < schematic[row].length; col++) {
-      if (schematic[row][col].match(/[0-9]/)) {
-        current += schematic[row][col];
-        let adj = hasAdjacentSymbol(schematic, [row, col]);
-        if (adj && adj[0] === "*") {
-          hasSymbol = adj;
-        }
-        continue;
-      }
-      if (hasSymbol) {
-        numbers[hasSymbol] ||= [];
-        numbers[hasSymbol].push(parseInt(current));
-      }
-      current = "";
-      hasSymbol = false;
-    }
-
-    if (hasSymbol) {
-      numbers[hasSymbol] ||= [];
-      numbers[hasSymbol].push(parseInt(current));
-    }
-    current = "";
-    hasSymbol = false;
-  }
-
-  let ratio = 0;
-  Object.values(numbers).forEach((v) => {
-    if (v.length > 1) {
-      ratio += v.reduce((prev, curr) => prev * curr);
-    }
-  });
-  return ratio;
 }

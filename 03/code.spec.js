@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { adj, run, hasAdjacentSymbol, ratio } from "./code.js";
+import { adj, default as run, hasAdjacentSymbol } from "./code.js";
 
 describe("gear ratios", () => {
   it("example", () => {
@@ -18,7 +18,7 @@ describe("gear ratios", () => {
 
     const output = run(input);
 
-    expect(output).toBe(4361);
+    expect(output[0]).toBe(4361);
   });
 
   it("gets adjacent positions of position start", () => {
@@ -66,7 +66,7 @@ describe("gear ratios", () => {
 
     const output = run(input);
 
-    expect(output).toBe(4361);
+    expect(output[0]).toBe(4361);
   });
 
   it("calculates gear ratios", () => {
@@ -83,8 +83,8 @@ describe("gear ratios", () => {
 .664.598..
 `;
 
-    const output = ratio(input);
+    const output = run(input);
 
-    expect(output).toBe(467835);
+    expect(output[1]).toBe(467835);
   });
 });
