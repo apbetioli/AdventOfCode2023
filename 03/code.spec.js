@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { adj, default as run, hasAdjacentSymbol } from "./code.js";
+import { adj, run, hasAdjacentSymbol, ratio } from "./code.js";
 
 describe("gear ratios", () => {
   it("example", () => {
@@ -46,7 +46,7 @@ describe("gear ratios", () => {
   it("returns if a symbol is in the list of adjacent positions", () => {
     const schematic = ["467..114..", "...*......"];
 
-    expect(hasAdjacentSymbol(schematic, [0, 2])).toBe(true);
+    expect(hasAdjacentSymbol(schematic, [0, 2])).toEqual(["*", 1, 3]);
     expect(hasAdjacentSymbol(schematic, [0, 0])).toBe(false);
   });
 
@@ -69,22 +69,22 @@ describe("gear ratios", () => {
     expect(output).toBe(4361);
   });
 
-  //   it("has negative numbers", () => {
-  //     const input = `
-  // 467..114.
-  // ...*.....
-  // ..35..633
-  // ......#..
-  // 617*.....
-  // .....+.58
-  // ..592....
-  // ......755
-  // ...$.*...
-  // .664.598.
-  // `;
+  it("calculates gear ratios", () => {
+    const input = `
+467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..
+`;
 
-  //     const output = run(input);
+    const output = ratio(input);
 
-  //     expect(output).toBe(4361);
-  //   });
+    expect(output).toBe(467835);
+  });
 });

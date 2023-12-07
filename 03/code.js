@@ -1,4 +1,4 @@
-export default function run(input) {
+export function run(input) {
   const schematic = parseSchematic(input);
   const numbers = [];
 
@@ -28,7 +28,7 @@ export default function run(input) {
     hasSymbol = false;
   }
 
-  return numbers.reduce((prev, curr) => prev + curr, 0);
+  return numbers.reduce((prev, curr) => prev + curr);
 }
 
 export function parseSchematic(input) {
@@ -54,8 +54,50 @@ export function hasAdjacentSymbol(schematic, position) {
   const size = [schematic.length, schematic[0].length];
   for (const p of adj(position, size)) {
     if (!schematic[p[0]][p[1]].match(/[0-9\.]/)) {
-      return true;
+      return [schematic[p[0]][p[1]], p[0], p[1]];
     }
   }
   return false;
+}
+
+export function ratio(input) {
+  const schematic = parseSchematic(input);
+  const numbers = {};
+
+  for (let row = 0; row < schematic.length; row++) {
+    let current = "";
+    let hasSymbol = false;
+
+    for (let col = 0; col < schematic[row].length; col++) {
+      if (schematic[row][col].match(/[0-9]/)) {
+        current += schematic[row][col];
+        let adj = hasAdjacentSymbol(schematic, [row, col]);
+        if (adj && adj[0] === "*") {
+          hasSymbol = adj;
+        }
+        continue;
+      }
+      if (hasSymbol) {
+        numbers[hasSymbol] ||= [];
+        numbers[hasSymbol].push(parseInt(current));
+      }
+      current = "";
+      hasSymbol = false;
+    }
+
+    if (hasSymbol) {
+      numbers[hasSymbol] ||= [];
+      numbers[hasSymbol].push(parseInt(current));
+    }
+    current = "";
+    hasSymbol = false;
+  }
+
+  let ratio = 0;
+  Object.values(numbers).forEach((v) => {
+    if (v.length > 1) {
+      ratio += v.reduce((prev, curr) => prev * curr);
+    }
+  });
+  return ratio;
 }
