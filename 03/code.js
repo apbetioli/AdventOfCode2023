@@ -27,8 +27,6 @@ export default function run(input) {
       numbers[hasSymbol] ||= [];
       numbers[hasSymbol].push(parseInt(current));
     }
-    current = "";
-    hasSymbol = false;
   }
 
   let ratio = 0;
