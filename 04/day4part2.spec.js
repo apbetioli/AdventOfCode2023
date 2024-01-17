@@ -1,12 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { default as run, parseCard, calculatePoints } from "./code.js";
+import { default as run, parseCard, calculatePoints } from "./day4part2.js";
 
-// Card - winning numbers | your numbers
-// The first match is worth one point
-// Each match after the first doubles the point if that card
-// 2^(win-1) if win > 0
-
-describe("scratchcards", () => {
+describe("scratchcards part 2", () => {
   it("parses a single card", () => {
     const cardStr = `Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53`;
 
@@ -18,7 +13,7 @@ describe("scratchcards", () => {
     });
   });
 
-  it("calculates the number of points in a card", () => {
+  it("calculates the number of matches in a card", () => {
     const card = {
       winning: [41, 48, 83, 86, 17],
       yours: [83, 86, 6, 31, 17, 9, 48, 53],
@@ -26,7 +21,7 @@ describe("scratchcards", () => {
 
     const points = calculatePoints(card);
 
-    expect(points).toBe(8);
+    expect(points).toBe(4);
   });
 
   it("calculates a group of cards", () => {
@@ -39,8 +34,8 @@ Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
 Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
     `;
 
-    const points = run(input);
+    const cards = run(input);
 
-    expect(points).toBe(13);
+    expect(cards).toBe(30);
   });
 });
